@@ -39,33 +39,47 @@ class App extends Component {
  
     if (!this.enlistedClasses.includes(bot_class)) {
       this.enlistedClasses.push(bot_class);
+
+      const updatedBots = this.state.bots.filter((b) => b.id !== bot.id);
+
       this.setState((prevState) => ({
         selectedBots: [...prevState.selectedBots, bot],
+        bots: updatedBots,
       }));
     }
   };
 
   releaseBot = (bot) => {
+    const { selectedBots } = this.state;
+  
+    const updatedSelectedBots = selectedBots.filter((selectedBot) => selectedBot.id !== bot.id);
+  
     this.setState((prevState) => ({
-      selectedBots: prevState.selectedBots.filter((selectedBot) => selectedBot.id !== bot.id),
+      selectedBots: updatedSelectedBots,
+      bots: [...prevState.bots, bot],
     }));
   };
 
   dischargeBot = (bot) => {
-    fetch(`http://localhost:3000/bots/${bot.id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to discharge bot");
-        }
-        this.setState((prevState) => ({
-          selectedBots: prevState.selectedBots.filter((selectedBot) => selectedBot.id !== bot.id),
-          selectedBotId: null,
-        }));
-        window.location.reload();
+  
+    const Confirmation = window.confirm(`Are you sure you want to discharge ${bot.name}?`);
+  
+    if (Confirmation) {
+      fetch(`http://localhost:3000/bots/${bot.id}`, {
+        method: "DELETE",
       })
-      .catch((error) => console.error("Error discharging bot:", error));
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to discharge bot");
+          }
+          this.setState((prevState) => ({
+            selectedBots: prevState.selectedBots.filter((selectedBot) => selectedBot.id !== bot.id),
+            selectedBotId: null,
+          }));
+          window.location.reload();
+        })
+        .catch((error) => console.error("Error discharging bot:", error));
+    }
   };
 
   showBotSpecs = (botId) => {
