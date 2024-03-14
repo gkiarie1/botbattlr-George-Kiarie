@@ -1,10 +1,13 @@
 import React from "react";
 
-function BotSpecs({ bot, enlistBot, goBackToList }) {
+function BotSpecs({ bot, enlistBot, goBackToList, dischargeBot}) {
   const handleEnlistClick = () => {
     enlistBot(bot); 
     goBackToList(); 
-  };
+  }
+  const handleDischargeClick = () => {
+    dischargeBot(bot); 
+  }
 
   return (
     <div>
@@ -17,6 +20,7 @@ function BotSpecs({ bot, enlistBot, goBackToList }) {
       <p>Catchphrase: {bot.catchphrase}</p>
       <button onClick={handleEnlistClick}>Enlist</button>
       <button onClick={goBackToList}>Back to List</button>
+      <button onClick={handleDischargeClick}>Discharge Bot</button>
     </div>
   );
 }

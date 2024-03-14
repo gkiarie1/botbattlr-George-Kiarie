@@ -22,4 +22,30 @@
     flex-direction: column;
     margin-top: auto;
     background-color:gray;
+    border: 3px solid black;
+}
+
+form {
+  border: 3px solid black; 
+  padding: 20px; 
+  width: 300px; 
+  margin: 0 auto; 
+}
+
+form input {
+  width: 80%; 
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+form button {
+  background-color: black; 
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.botcollection{
+  border: 3px solid black;
 }
